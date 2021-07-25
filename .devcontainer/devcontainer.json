@@ -1,0 +1,19 @@
+{
+	"name": "local-dev",
+	"dockerFile": "../Dockerfile",
+	"settings": {},
+
+	"extensions": [
+		"ms-python.python"
+	],
+
+	"initializeCommand": "${PWD}/check_prereqs.sh",
+
+	"runArgs": [
+		"--privileged",
+		"-e", "DISPLAY=${env:DISPLAY}",
+		"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		"--gpus", "all",
+		"--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
+	]
+}
