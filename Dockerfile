@@ -32,10 +32,8 @@ RUN mkdir build && cd build &&\
     VIDEO_CODEC_SDK_DIR=$(eval ${FIND_VIDEO_CODEC_SDK}) &&\
     PYTHON_SHORT_VERSION=$(eval ${FIND_PYTHON_VERSION}) &&\
     LIBPYTHON_PATH="/usr/lib/x86_64-linux-gnu/libpython${PYTHON_SHORT_VERSION}.so" &&\
+    echo "VIDEO_CODEC_SDK_DIR=${VIDEO_CODEC_SDK_DIR} PYTHON_SHORT_VERSION=${PYTHON_SHORT_VERSION} LIBPYTHON_PATH=${LIBPYTHON_PATH}" &&\
     cmake .. \
-        -DNVCUVID_LIBRARY="${VIDEO_CODEC_SDK_DIR}/Lib/linux/stubs//x86_64/libnvcuvid.so" \
-        -DNVENCODE_LIBRARY="${VIDEO_CODEC_SDK_DIR}/Lib/linux/stubs//x86_64/libnvidia-encode.so" \
-        -DVIDEO_CODEC_SDK_INCLUDE_DIR="${VIDEO_CODEC_SDK_DIR}/Interface" \
         -DFFMPEG_DIR:PATH="$(which ffmpeg)" \
         -DVIDEO_CODEC_SDK_DIR:PATH="${VIDEO_CODEC_SDK_DIR}" \
         -DGENERATE_PYTHON_BINDINGS:BOOL="1" \
@@ -47,6 +45,7 @@ RUN mkdir build && cd build &&\
     cp ./bin/*.so /usr/local/lib &&\
     ldconfig
 
-ENV PYTHONPATH "${PYTHONPATH}:/usr/local/lib"
+ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
+ENV PYTHONPATH "/usr/local/lib:${PYTHONPATH}"
 
 RUN pip3 install numpy
