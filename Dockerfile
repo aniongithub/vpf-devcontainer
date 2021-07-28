@@ -48,4 +48,6 @@ RUN mkdir build && cd build &&\
 ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
 ENV PYTHONPATH "/usr/local/lib:${PYTHONPATH}"
 
-RUN pip3 install numpy
+RUN pip3 install numpy matplotlib scikit-image &&\
+    apt-get update &&\
+    apt-get install -y python3-opencv
