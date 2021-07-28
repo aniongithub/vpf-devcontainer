@@ -37,8 +37,9 @@ args.ground_truth_images.sort()
 processed = 0
 psnr = []
 mse = []
+gray_mse = []
 ssim = []
-for frame in range(image_count):    
+for frame in range(image_count):
     print(f"Processing frame: {frame}")
 
     if not nvDec.DecodeSingleFrame(frame_nv12):
@@ -47,8 +48,12 @@ for frame in range(image_count):
     rgb_decoded = cv2.cvtColor(yuv, cv2.COLOR_YUV2BGR_NV12)
     rgb_ground_truth = cv2.imread(args.ground_truth_images[frame])
 
-    psnr.append(cv2.PSNR(rgb_ground_truth, rgb_decoded))
+    ground_truth_gray = cv2.cvtColor(rgb_ground_truth, cv2.COLOR_BGR2GRAY)
+    decoded_gray = cv2.cvtColor(rgb_decoded, cv2.COLOR_BGR2GRAY)
+
+    psnr.append(cv2.PSNR(rgb_ground_truth, rgb_decoded))    
     mse.append(np.square(np.subtract(rgb_ground_truth, rgb_decoded)).mean())
+    gray_mse.append(np.square(np.subtract(ground_truth_gray, decoded_gray)).mean())
     ssim.append(calc_ssim(rgb_ground_truth, rgb_decoded, multichannel = True))
 
     if args.show:
@@ -62,12 +67,14 @@ for frame in range(image_count):
 
 print(f"PSNR - min: {min(psnr)}, max: {max(psnr)}, mean: {sum(psnr)/len(psnr)}, median: {median(psnr)}")
 print(f"MSE - min: {min(mse)}, max: {max(mse)}, mean: {sum(mse)/len(mse)}, median: {median(mse)}")
+print(f"Gray MSE - min: {min(gray_mse)}, max: {max(gray_mse)}, mean: {sum(gray_mse)/len(gray_mse)}, median: {median(gray_mse)}")
 print(f"SSIM - min: {min(ssim)}, max: {max(ssim)}, mean: {sum(ssim)/len(ssim)}, median: {median(ssim)}")
 
 plt.plot(range(image_count), psnr)
 plt.plot(range(image_count), mse)
+plt.plot(range(image_count), gray_mse)
 plt.plot(range(image_count), ssim)
-plt.legend(["PSNR", "MSE", "SSIM"])
+plt.legend(["PSNR", "MSE", "Gray MSE", "SSIM"])
   
 plt.xlabel("frames")
   
