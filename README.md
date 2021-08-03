@@ -8,4 +8,4 @@ See the video below as an example.
 
 https://user-images.githubusercontent.com/605680/127966728-6b620fd5-0e9f-4630-ae5e-804b9d49a87c.mp4
 
-Tested on Ubuntu, with [Docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script) and [Visual Studio Code](https://code.visualstudio.com/docs/setup/linux) installed. YMMV on other platforms, including WSL.
+Tested on Ubuntu, with [Docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script), [Visual Studio Code](https://code.visualstudio.com/docs/setup/linux) and the [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension pack installed. YMMV on other platforms, including WSL.
