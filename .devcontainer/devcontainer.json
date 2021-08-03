@@ -4,7 +4,8 @@
 	"settings": {},
 
 	"extensions": [
-		"ms-python.python"
+		"ms-python.python",
+		"zaaack.markdown-editor"
 	],
 
 	"initializeCommand": "${PWD}/check_prereqs.sh",
