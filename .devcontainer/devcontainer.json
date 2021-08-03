@@ -8,7 +8,7 @@
 		"zaaack.markdown-editor"
 	],
 
-	"initializeCommand": "${PWD}/check_prereqs.sh",
+	"initializeCommand": "xhost +SI:localuser:root;${PWD}/check_prereqs.sh",
 
 	"runArgs": [
 		"--privileged",
